@@ -1,7 +1,10 @@
 from time import sleep
+import datetime as dt
+from CRUD import create, read, update, delete, create_file
 
 
 def main():
+    create_file()
     while True:
         print('Main menu:')
         print('1. View tasks')
@@ -42,6 +45,11 @@ def main():
 
         if choice == 3:
             print('-Add task:')
+            description = input('Description: ')
+            status = 'not done'
+            created_at = dt.datetime.now().strftime('%d.%m.%Y')
+            updated_at = '-'
+            create(description, status, created_at, updated_at)
 
         if choice == 4:
             print('-Delete task:')
