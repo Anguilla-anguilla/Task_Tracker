@@ -14,3 +14,9 @@ def id_auto_increment(json_file):
             last_id = data[-1]['id']
             id = int(last_id) + 1
             return id
+
+
+def print_pattern(id, description, status, created_at, updated_at):
+    print(f'{id}. {description}. {status}')
+    print(f'Created at: {created_at}')
+    print(f'Last update: {updated_at}')

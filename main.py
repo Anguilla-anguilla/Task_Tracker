@@ -6,38 +6,44 @@ from CRUD import create, read, update, delete, create_file
 def main():
     create_file()
     while True:
+        print('----------')
         print('Main menu:')
         print('1. View tasks')
         print('2. Update task')
         print('3. Add task')
         print('4. Delete task')
         print('5. Exit')
+        print('----------')
 
         choice = int(input('Choose an option:'))
 
         if choice == 1:
             print('-View tasks')
-            print('1. All tasks')
-            print('2. In progress')
-            print('3. Not done')
-            print('4. Done')
+            print('11. All tasks')
+            print('12. In progress')
+            print('13. Not done')
+            print('14. Done')
 
             choice = int(input('Choose an option:'))
 
-            if choice == 1:
-                print('- All tasks:')
+            if choice == 11:
+                print('-All tasks:')
+                read(choice)
                 sleep(5)
-            
-            if choice == 2:
+
+            if choice == 12:
                 print('-In progress:')
+                read(choice)
                 sleep(5)
 
-            if choice == 3:
+            if choice == 13:
                 print('-Not done:')
+                read(choice)
                 sleep(5)
 
-            if choice == 4:
+            if choice == 14:
                 print('-Done:')
+                read(choice)
                 sleep(5)
 
         if choice == 2:
@@ -46,10 +52,8 @@ def main():
         if choice == 3:
             print('-Add task:')
             description = input('Description: ')
-            status = 'not done'
             created_at = dt.datetime.now().strftime('%d.%m.%Y')
-            updated_at = '-'
-            create(description, status, created_at, updated_at)
+            create(description, created_at)
 
         if choice == 4:
             print('-Delete task:')
