@@ -48,7 +48,7 @@ def main():
 
         if choice == 2:
             print('-Update task:')
-            id = int(input('Enter task id: '))
+            upd_id = int(input('Enter task id: '))
             updated_at = dt.datetime.now().strftime('%d.%m.%Y')
 
             print('1. Update status')
@@ -61,7 +61,7 @@ def main():
                 print('2. In progress')
                 print('3. Not done')
                 change_status = int(input('Choose an option:'))
-                update(id, updated_at, change_status=change_status)
+                update(upd_id, updated_at, change_status=change_status)
 
             if sub_choice_2 == 2:
                 change_description = input('Enter new description: ')
@@ -75,6 +75,8 @@ def main():
 
         if choice == 4:
             print('-Delete task:')
+            del_id = int(input('Enter task id: '))
+            delete(del_id)
 
         if choice == 5:
             print('Thanks for using Task_Tracker!')

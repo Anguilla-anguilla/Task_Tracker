@@ -84,5 +84,12 @@ def update(id, updated_at, change_description=None, change_status=None):
             json.dump(data, file, indent=4, ensure_ascii=False)
 
 
-def delete():
-    pass
+def delete(id):
+    with open(JSON_FILE, 'rt', encoding='utf-8') as file:
+        data = json.load(file)
+        delete_task = [item for item in data if item['id'] == id]
+        delete_task = delete_task[0]
+        data.remove(delete_task)
+
+    with open(JSON_FILE, 'wt', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
