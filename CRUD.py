@@ -37,15 +37,15 @@ def create(description, created_at):
 
 def read(choice):
     with open(JSON_FILE, 'rt', encoding='utf-8') as file:
-        if choice == 11:
+        if choice == 1:
             data = json.load(file)
-        if choice == 12:
+        if choice == 2:
             load_json = json.load(file)
             data = [item for item in load_json if item['status'] == IN_PROGRESS]
-        if choice == 13:
+        if choice == 3:
             load_json = json.load(file)
             data = [item for item in load_json if item['status'] == NOT_DONE]
-        if choice == 14:
+        if choice == 4:
             load_json = json.load(file)
             data = [item for item in load_json if item['status'] == DONE]
         for item in data:
@@ -61,8 +61,27 @@ def read(choice):
                         updated_at)
 
 
-def update():
-    pass
+def update(id, updated_at, change_description=None, change_status=None):
+    with open(JSON_FILE, 'rt', encoding='utf-8') as file:
+        data = json.load(file)
+        update_task = [item for item in data if item['id'] == id]
+        update_task = update_task[0]
+
+        update_task['updated_at'] = updated_at
+        
+        if change_status == None:
+            update_task['description'] = change_description
+
+        if change_description == None:
+            if change_status == 1:
+                update_task['status'] = DONE
+            if change_status == 2:
+                update_task['status'] = IN_PROGRESS
+            if change_status == 3:
+                update_task['status'] = NOT_DONE
+
+        with open(JSON_FILE, 'wt', encoding='utf-8') as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
 
 
 def delete():

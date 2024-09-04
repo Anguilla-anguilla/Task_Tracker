@@ -19,35 +19,53 @@ def main():
 
         if choice == 1:
             print('-View tasks')
-            print('11. All tasks')
-            print('12. In progress')
-            print('13. Not done')
-            print('14. Done')
+            print('1. All tasks')
+            print('2. In progress')
+            print('3. Not done')
+            print('4. Done')
 
-            choice = int(input('Choose an option:'))
+            sub_choice_1 = int(input('Choose an option:'))
 
-            if choice == 11:
+            if sub_choice_1 == 1:
                 print('-All tasks:')
-                read(choice)
+                read(sub_choice_1)
                 sleep(5)
 
-            if choice == 12:
+            if sub_choice_1 == 2:
                 print('-In progress:')
-                read(choice)
+                read(sub_choice_1)
                 sleep(5)
 
-            if choice == 13:
+            if sub_choice_1 == 3:
                 print('-Not done:')
-                read(choice)
+                read(sub_choice_1)
                 sleep(5)
 
-            if choice == 14:
+            if sub_choice_1 == 4:
                 print('-Done:')
-                read(choice)
+                read(sub_choice_1)
                 sleep(5)
 
         if choice == 2:
             print('-Update task:')
+            id = int(input('Enter task id: '))
+            updated_at = dt.datetime.now().strftime('%d.%m.%Y')
+
+            print('1. Update status')
+            print('2. Update description')
+            sub_choice_2 = int(input('Choose an option:'))
+
+            if sub_choice_2 == 1:
+                print('Set status to:')
+                print('1. Done')
+                print('2. In progress')
+                print('3. Not done')
+                change_status = int(input('Choose an option:'))
+                update(id, updated_at, change_status=change_status)
+
+            if sub_choice_2 == 2:
+                change_description = input('Enter new description: ')
+                update(id, updated_at, change_description=change_description)
 
         if choice == 3:
             print('-Add task:')
@@ -61,6 +79,7 @@ def main():
         if choice == 5:
             print('Thanks for using Task_Tracker!')
             break
+
 
 if __name__ == '__main__':
     main()
