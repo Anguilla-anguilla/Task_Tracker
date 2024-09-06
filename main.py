@@ -1,86 +1,67 @@
-from time import sleep
-import datetime as dt
+import argparse
 from CRUD import create, read, update, delete, create_file
 
 
 def main():
     create_file()
-    while True:
-        print('----------')
-        print('Main menu:')
-        print('1. View tasks')
-        print('2. Update task')
-        print('3. Add task')
-        print('4. Delete task')
-        print('5. Exit')
-        print('----------')
 
-        choice = int(input('Choose an option:'))
+    parser = argparse.ArgumentParser(prog='task',
+                                    description='Task tracker')
 
-        if choice == 1:
-            print('-View tasks')
-            print('1. All tasks')
-            print('2. In progress')
-            print('3. Not done')
-            print('4. Done')
+    subparsers = parser.add_subparsers(dest='command')
 
-            sub_choice_1 = int(input('Choose an option:'))
+    parser_add = subparsers.add_parser('add', help='Add a new task')
+    parser_add.add_argument('description', type=str, help='Task descripyion')
 
-            if sub_choice_1 == 1:
-                print('-All tasks:')
-                read(sub_choice_1)
-                sleep(5)
+    parser_list = subparsers.add_parser('list', help='Tasks list')
+    parser_list.add_argument('status', nargs='?', 
+                            choices=['all', 'not-done', 'in-progress', 'done'],
+                            help='Filter')
 
-            if sub_choice_1 == 2:
-                print('-In progress:')
-                read(sub_choice_1)
-                sleep(5)
+    parser_update = subparsers.add_parser('update', help='Update description')
+    parser_update.add_argument('id', type=int, help='Task ID')
+    parser_update.add_argument('description', type=str, help='Task description')
 
-            if sub_choice_1 == 3:
-                print('-Not done:')
-                read(sub_choice_1)
-                sleep(5)
+    parser_mark = subparsers.add_parser('mark', help='Change status')
+    parser_mark.add_argument('id', type=int, help='Task ID')
+    parser_mark.add_argument('status', nargs='?', 
+                            choices=['not-done', 'in-progress', 'done'],
+                            help='Filter')
 
-            if sub_choice_1 == 4:
-                print('-Done:')
-                read(sub_choice_1)
-                sleep(5)
+    parser_delete = subparsers.add_parser('delete', help='Delete task')
+    parser_delete.add_argument('id', type=int, help='Task ID')
 
-        if choice == 2:
-            print('-Update task:')
-            upd_id = int(input('Enter task id: '))
-            updated_at = dt.datetime.now().strftime('%d.%m.%Y')
 
-            print('1. Update status')
-            print('2. Update description')
-            sub_choice_2 = int(input('Choose an option:'))
+    args = parser.parse_args()
 
-            if sub_choice_2 == 1:
-                print('Set status to:')
-                print('1. Done')
-                print('2. In progress')
-                print('3. Not done')
-                change_status = int(input('Choose an option:'))
-                update(upd_id, updated_at, change_status=change_status)
-
-            if sub_choice_2 == 2:
-                change_description = input('Enter new description: ')
-                update(id, updated_at, change_description=change_description)
-
-        if choice == 3:
-            print('-Add task:')
-            description = input('Description: ')
-            created_at = dt.datetime.now().strftime('%d.%m.%Y')
-            create(description, created_at)
-
-        if choice == 4:
-            print('-Delete task:')
-            del_id = int(input('Enter task id: '))
-            delete(del_id)
-
-        if choice == 5:
-            print('Thanks for using Task_Tracker!')
-            break
+    if args.command == 'add':
+        create(args.description)
+    elif args.command == 'list':
+        if args.status == 'all':
+            read(1)
+        elif args.status == 'in-progress':
+            read(2)
+        elif args.status == 'not-done':
+            read(3)
+        elif args.status == 'done':
+            read(4)
+        else:
+            print('Wrong command.')
+    elif args.command == 'update':
+        update(args.id, change_description=args.description)
+    elif args.command == 'mark':
+        if args.status == 'done':
+            update(args.id, change_status=1)
+        elif args.status == 'in-progress':
+            update(args.id, change_status=2)
+        elif args.status == 'not-done':
+            update(args.id, change_status=3) 
+        else:
+            print('Wrong command.')
+    elif args.command == 'delete':
+        delete(args.id)
+    else:
+        print('Wrong command.')
 
 
 if __name__ == '__main__':

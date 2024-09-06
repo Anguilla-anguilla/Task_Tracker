@@ -1,11 +1,13 @@
 import json
 import os
-import pprint as pp
+import datetime as dt
+
+
 from utils import id_auto_increment, print_pattern
 
 JSON_FILE = 'tasks.json'
 
-#status
+# status
 NOT_DONE = 'NOT DONE'
 DONE = 'DONE'
 IN_PROGRESS = 'IN PROGRESS'
@@ -17,9 +19,10 @@ def create_file():
             json.dump([], file)
 
 
-def create(description, created_at):
+def create(description):
 
     id = id_auto_increment(JSON_FILE)
+    created_at = dt.datetime.now().strftime('%d.%m.%Y')
 
     new_task = {'id': id,
                 'description': description,
@@ -61,7 +64,10 @@ def read(choice):
                         updated_at)
 
 
-def update(id, updated_at, change_description=None, change_status=None):
+def update(id, change_description=None, change_status=None):
+
+    updated_at = dt.datetime.now().strftime('%d.%m.%Y')
+
     with open(JSON_FILE, 'rt', encoding='utf-8') as file:
         data = json.load(file)
         update_task = [item for item in data if item['id'] == id]
