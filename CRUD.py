@@ -71,20 +71,22 @@ def update(id, change_description=None, change_status=None):
     with open(JSON_FILE, 'rt', encoding='utf-8') as file:
         data = json.load(file)
         update_task = [item for item in data if item['id'] == id]
-        update_task = update_task[0]
-
-        update_task['updated_at'] = updated_at
+        if len(update_task) == 0:
+            print('Wrong task id')
+        else:
+            update_task = update_task[0]
+            update_task['updated_at'] = updated_at
         
-        if change_status == None:
-            update_task['description'] = change_description
+            if change_status == None:
+                update_task['description'] = change_description
 
-        if change_description == None:
-            if change_status == 1:
-                update_task['status'] = DONE
-            if change_status == 2:
-                update_task['status'] = IN_PROGRESS
-            if change_status == 3:
-                update_task['status'] = NOT_DONE
+            if change_description == None:
+                if change_status == 1:
+                    update_task['status'] = DONE
+                if change_status == 2:
+                    update_task['status'] = IN_PROGRESS
+                if change_status == 3:
+                    update_task['status'] = NOT_DONE
 
         with open(JSON_FILE, 'wt', encoding='utf-8') as file:
             json.dump(data, file, indent=4, ensure_ascii=False)
@@ -94,8 +96,11 @@ def delete(id):
     with open(JSON_FILE, 'rt', encoding='utf-8') as file:
         data = json.load(file)
         delete_task = [item for item in data if item['id'] == id]
-        delete_task = delete_task[0]
-        data.remove(delete_task)
+        if len(delete_task) == 0:
+            print('Wrong task id')
+        else:
+            delete_task = delete_task[0]
+            data.remove(delete_task)
 
     with open(JSON_FILE, 'wt', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)

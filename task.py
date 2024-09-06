@@ -6,7 +6,7 @@ def main():
     create_file()
 
     parser = argparse.ArgumentParser(prog='task',
-                                    description='Task tracker')
+                                     description='Task tracker')
 
     subparsers = parser.add_subparsers(dest='command')
 
@@ -15,8 +15,8 @@ def main():
 
     parser_list = subparsers.add_parser('list', help='Tasks list')
     parser_list.add_argument('status', nargs='?', 
-                            choices=['all', 'not-done', 'in-progress', 'done'],
-                            help='Filter')
+                             choices=['all', 'not-done', 'in-progress', 'done'],
+                             help='Filter')
 
     parser_update = subparsers.add_parser('update', help='Update description')
     parser_update.add_argument('id', type=int, help='Task ID')
@@ -24,9 +24,9 @@ def main():
 
     parser_mark = subparsers.add_parser('mark', help='Change status')
     parser_mark.add_argument('id', type=int, help='Task ID')
-    parser_mark.add_argument('status', nargs='?', 
-                            choices=['not-done', 'in-progress', 'done'],
-                            help='Filter')
+    parser_mark.add_argument('status', nargs='?',
+                             choices=['not-done', 'in-progress', 'done'],
+                             help='Mark')
 
     parser_delete = subparsers.add_parser('delete', help='Delete task')
     parser_delete.add_argument('id', type=int, help='Task ID')
