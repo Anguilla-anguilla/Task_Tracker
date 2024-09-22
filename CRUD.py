@@ -4,19 +4,6 @@ import datetime as dt
 
 from utils import id_auto_increment, print_pattern
 
-
-# def path():
-#     path = 'tasks.json'
-#     def change_path(new_path=None):
-#         nonlocal path
-#         if new_path == None:
-#             path = 'tasks.json'
-#         else:
-#             path = new_path
-#         return path
-#     return change_path
-
-
 JSON_FILE = 'tasks.json'
 
 # status
@@ -48,7 +35,6 @@ def create(description):
     new_task = {'id': id,
                 'description': description,
                 'status': NOT_DONE,
-                'project': UNKNOWN,
                 'created_at': created_at,
                 'updated_at': '-',
                 }
@@ -78,18 +64,16 @@ def read(choice):
             id = item['id']
             description = item['description']
             status = item['status']
-            project = item['project']
             created_at = item['created_at']
             updated_at = item['updated_at']
             print_pattern(id=id,
                           description=description,
                           status=status,
-                          project=project,
                           created_at=created_at,
                           updated_at=updated_at)
 
 
-def update(id, change_description=None, change_status=None, ):
+def update(id, change_description=None, change_status=None):
 
     updated_at = dt.datetime.now().strftime('%d.%m.%Y')
 
@@ -112,16 +96,6 @@ def update(id, change_description=None, change_status=None, ):
                     update_task['status'] = IN_PROGRESS
                 if change_status == 3:
                     update_task['status'] = NOT_DONE
-                if change_status == 4:
-                    update_task['project'] = PROJECT1
-                if change_status == 5:
-                    update_task['project'] = PROJECT2
-                if change_status == 6:
-                    update_task['project'] = PROJECT3
-                if change_status == 7:
-                    update_task['project'] = PROJECT4
-                if change_status == 8:
-                    update_task['project'] = UNKNOWN
 
         with open(JSON_FILE, 'wt', encoding='utf-8') as file:
             json.dump(data, file, indent=4, ensure_ascii=False)
