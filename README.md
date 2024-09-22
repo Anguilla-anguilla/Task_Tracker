@@ -51,5 +51,8 @@ To delete a task, use the *'delete'* command followed by the task ID.
 
 ``` python task.py delete 5 ```
 
+To delete all tasks, use *'clear'* command.
+
+``` python task.py clear ```
 
 [Project URL](https://roadmap.sh/projects/task-tracker)

@@ -1,5 +1,6 @@
 import argparse
-from CRUD import create, read, update, delete, create_file
+from CRUD import (create, read, update, delete,
+                  create_file, delete_file)
 
 
 def main():
@@ -31,6 +32,7 @@ def main():
     parser_delete = subparsers.add_parser('delete', help='Delete task')
     parser_delete.add_argument('id', type=int, help='Task ID')
 
+    subparsers.add_parser('clear', help='Delete file')
 
     args = parser.parse_args()
 
@@ -55,11 +57,13 @@ def main():
         elif args.status == 'in-progress':
             update(args.id, change_status=2)
         elif args.status == 'not-done':
-            update(args.id, change_status=3) 
+            update(args.id, change_status=3)
         else:
             print('Wrong command.')
     elif args.command == 'delete':
         delete(args.id)
+    elif args.command == 'clear':
+        delete_file()
     else:
         print('Wrong command.')
 
